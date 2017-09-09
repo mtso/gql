@@ -23,3 +23,14 @@ enum Episode {
 type Starship {
   name: String
 }
+
+# List resolver
+Human: {
+  starships(obj, args, context) {
+    return obj.starshipIDs.map(
+      id => context.db.loadStarshipByID(id).then(
+        shipData => new Starship(shipData)
+      )
+    )
+  }
+}
