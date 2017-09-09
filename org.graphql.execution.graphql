@@ -1,5 +1,11 @@
 type Query {
   human(id: ID!): Human
+  
+  human(obj, args, context) {
+    return context.db.loadHumanByID(args.id).then(
+      userData => new Human(userData)
+    )
+  }
 }
 
 type Human {
